@@ -1,0 +1,23 @@
+Modify the Zeppelin environment file:
+sudo nano etc/zeppelin/conf.dist/zeppelin-env.sh
+ 
+Then add these lines:
+export ZEPPELIN_NOTEBOOK_STORAGE=org.apache.zeppelin.notebook.repo.S3NotebookRepo
+export ZEPPELIN_NOTEBOOK_S3_BUCKET=my-s3-bucket-name
+export ZEPPELIN_NOTEBOOK_USER=my-zeppelin-user-name
+ 
+Modify the Zeppelin configuration file:
+sudo cp /etc/zeppelin/conf/zeppelin-site.xml.template /etc/zeppelin/conf/zeppelin-site.xml
+sudo nano /etc/zeppelin/conf/zeppelin-site.xml
+Uncomment these settings and make the changes in red:
+<!--If you use S3 for storage, the following folder structure is necessary: bucket_name/username/notebook/-->
+<property> <name>zeppelin.notebook.s3.user</name><value>user1</value>
+<description>user name for S3 folder structure</description>
+</property>
+<property> <name>zeppelin.notebook.s3.bucket</name> <value>crosbie-zeppelin-bucket<value>
+<description>bucket name for notebook storage</description> </property>
+ 
+Then restart the Zeppelin process to pickup the new configuration changes:
+sudo /usr/lib/zeppelin/bin/zeppelin-daemon.sh restart
+ 
+ 
